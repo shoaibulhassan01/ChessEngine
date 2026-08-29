@@ -22,63 +22,114 @@ body{
   overflow:hidden;
 }
 
-  html, body {
-    margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-  }
+body{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 
-  body{
-    min-height:100vh;
-    min-height:100dvh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:12px;
-    background: var(--bg-page);
-    font-family: 'Segoe UI', Arial, sans-serif;
-  }
+  /*
+    Board ko width aur height
+    dono ke andar fit rakhenge
+  */
+  padding:10px;
 
-  .board-frame{
-    --board-size: min(92vw, 92vh);
-    width:var(--board-size);
-    height:var(--board-size);
-    padding:6px;
-    background:#dcebf9;
-    border-radius:8px;
-    box-shadow: 0 20px 45px -18px rgba(44,65,96,0.35);
-  }
+  background:var(--bg-page);
+  font-family:'Segoe UI', Arial, sans-serif;
+}
 
-  h1{
-    margin:0 0 22px;
-    font-size:clamp(28px, 6vw, 42px);
-    font-weight:800;
-    letter-spacing:1px;
-    color:#3d6491;
-    text-shadow: 0 2px 0 #ffffff;
-  }
+h1{
+  margin:0 0 14px;
 
-  .board{
-    width:100%;
-    height:100%;
-    display:grid;
-    grid-template-columns:repeat(8, minmax(0, 1fr));
-    grid-template-rows:repeat(8, minmax(0, 1fr));
-    border-radius:4px;
-    overflow:hidden;
-  }
+  font-size:clamp(24px, 5vw, 42px);
+  font-weight:800;
+  letter-spacing:1px;
 
-  .square{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    width:100%;
-    height:100%;
-    aspect-ratio:1;
-  }
+  color:#3d6491;
+  text-shadow:0 2px 0 #ffffff;
+
+  text-align:center;
+
+  /* Heading screen se bahar nahi jayegi */
+  flex-shrink:0;
+}
+
+
+/* =========================
+   BOARD FRAME
+========================= */
+
+.board-frame{
+  padding:6px;
+
+  background:#dcebf9;
+  border-radius:8px;
+
+  box-shadow:
+    0 20px 45px -18px rgba(44,65,96,0.35);
+
+  /*
+    Board frame bhi viewport se
+    bada nahi hoga
+  */
+  max-width:100%;
+  max-height:calc(100vh - 75px);
+
+  flex-shrink:1;
+}
+
+
+/* =========================
+   BOARD
+========================= */
+
+.board{
+  display:grid;
+
+  /*
+    Width:
+    viewport ke according
+
+    Height:
+    viewport ke according
+
+    Dono mein se jo chhota hoga
+    wahi board size decide karega.
+  */
+  width:min(
+    calc(100vw - 32px),
+    calc(100vh - 90px),
+    736px
+  );
+
+  height:min(
+    calc(100vw - 32px),
+    calc(100vh - 90px),
+    736px
+  );
+
+  grid-template-columns:repeat(8, 1fr);
+  grid-template-rows:repeat(8, 1fr);
+
+  border-radius:4px;
+  overflow:hidden;
+}
+
+
+/* =========================
+   SQUARE
+========================= */
+
+.square{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+
+  min-width:0;
+  min-height:0;
+}
 
 .square.light{
   background:var(--sq-light);
@@ -146,21 +197,38 @@ body{
    PIECES
 ========================= */
 
-  .piece{
-    font-size:min(6.8vw, 52px);
-    line-height:1;
-    position:relative;
-    z-index:2;
-    display:block;
-    transform: translateY(-1px);
-  }
+.piece{
+  /*
+    Piece board ke size ke
+    according automatically scale hoga
+  */
+  font-size:clamp(25px, 6vw, 58px);
 
-  .piece.gold{
-    color: var(--gold-piece);
-    -webkit-text-stroke: 1.8px var(--gold-stroke);
-    
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.25));
-  }
+  line-height:1;
+
+  position:relative;
+  z-index:2;
+
+  user-select:none;
+  cursor:pointer;
+}
+
+
+/* =========================
+   GOLD PIECES
+========================= */
+
+.piece.gold{
+  color:var(--gold-piece);
+
+  -webkit-text-stroke:
+    1.8px var(--gold-stroke);
+
+  filter:
+    drop-shadow(
+      0 2px 2px rgba(0,0,0,0.25)
+    );
+}
 
 
 /* =========================
