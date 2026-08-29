@@ -1,16 +1,26 @@
- :root{
-    --bg-page:#eef4fb;
-    --sq-light:#eaf2fb;
-    --sq-pattern:#cfe2f5;
-    --sq-pattern-line:#b9d6f0;
-    --gold-piece:#c17a3d;
-    --gold-stroke:#6b3a10;
-    --blue-piece:#5b7ba3;
-    --blue-stroke:#2c4160;
-    --coord:#7fa3c9;
-  }
+:root{
+  --bg-page:#eef4fb;
+  --sq-light:#eaf2fb;
+  --sq-pattern:#cfe2f5;
+  --sq-pattern-line:#b9d6f0;
+  --gold-piece:#c17a3d;
+  --gold-stroke:#6b3a10;
+  --blue-piece:#5b7ba3;
+  --blue-stroke:#2c4160;
+  --coord:#7fa3c9;
+}
 
-  *{box-sizing:border-box;}
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  margin:0;
+  overflow:hidden;
+}
 
   html, body {
     margin:0;
@@ -70,34 +80,71 @@
     aspect-ratio:1;
   }
 
-  .square.light{ background: var(--sq-light); }
-  .square.dark{
-    background: var(--sq-pattern);
-    background-image:
-      linear-gradient(var(--sq-pattern-line) 2px, transparent 2px),
-      linear-gradient(90deg, var(--sq-pattern-line) 2px, transparent 2px);
-    background-size: 33% 33%;
-    background-position: center;
-  }
+.square.light{
+  background:var(--sq-light);
+}
 
-  .square.dark::before{
-    content:"";
-    position:absolute;
-    inset:22%;
-    border: 3px solid var(--sq-pattern-line);
-    border-radius:3px;
-    opacity:0.7;
-  }
+.square.dark{
+  background:var(--sq-pattern);
 
-  .coord{
-    position:absolute;
-    font-size:11px;
-    font-weight:700;
-    color: var(--coord);
-    opacity:0.85;
-  }
-  .coord.rank{ top:4px; left:5px; }
-  .coord.file{ bottom:3px; right:6px; }
+  background-image:
+    linear-gradient(
+      var(--sq-pattern-line) 2px,
+      transparent 2px
+    ),
+    linear-gradient(
+      90deg,
+      var(--sq-pattern-line) 2px,
+      transparent 2px
+    );
+
+  background-size:33% 33%;
+  background-position:center;
+}
+
+.square.dark::before{
+  content:"";
+
+  position:absolute;
+  inset:22%;
+
+  border:3px solid var(--sq-pattern-line);
+  border-radius:3px;
+
+  opacity:0.7;
+}
+
+
+/* =========================
+   COORDINATES
+========================= */
+
+.coord{
+  position:absolute;
+
+  font-size:11px;
+  font-weight:700;
+
+  color:var(--coord);
+  opacity:0.85;
+
+  pointer-events:none;
+}
+
+.coord.rank{
+  top:4px;
+  left:5px;
+}
+
+.coord.file{
+  bottom:3px;
+  right:6px;
+}
+
+
+/* =========================
+   PIECES
+========================= */
 
   .piece{
     font-size:min(6.8vw, 52px);
@@ -115,9 +162,88 @@
     filter: drop-shadow(0 2px 2px rgba(0,0,0,0.25));
   }
 
-  .piece.blue{
-    color: var(--blue-piece);
-    -webkit-text-stroke: 1.8px var(--blue-stroke);
-    
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+
+/* =========================
+   BLUE PIECES
+========================= */
+
+.piece.blue{
+  color:var(--blue-piece);
+
+  -webkit-text-stroke:
+    1.8px var(--blue-stroke);
+
+  filter:
+    drop-shadow(
+      0 2px 2px rgba(0,0,0,0.2)
+    );
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:600px){
+
+  body{
+    padding:6px;
   }
+
+  h1{
+    margin-bottom:8px;
+    font-size:clamp(22px, 7vw, 30px);
+  }
+
+  .board-frame{
+    padding:4px;
+    border-radius:6px;
+  }
+
+  .coord{
+    font-size:8px;
+  }
+
+  .coord.rank{
+    top:2px;
+    left:3px;
+  }
+
+  .coord.file{
+    bottom:2px;
+    right:3px;
+  }
+
+  .piece{
+    font-size:clamp(22px, 8vw, 45px);
+  }
+}
+
+
+/* =========================
+   VERY SMALL HEIGHT
+========================= */
+
+@media (max-height:600px){
+
+  body{
+    padding:4px;
+  }
+
+  h1{
+    margin-bottom:5px;
+    font-size:24px;
+  }
+
+  .board-frame{
+    padding:3px;
+  }
+
+  .coord{
+    font-size:7px;
+  }
+
+  .piece{
+    font-size:clamp(20px, 7vh, 42px);
+  }
+}
