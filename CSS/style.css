@@ -1,106 +1,317 @@
- :root{
-    --bg-page:#eef4fb;
-    --sq-light:#eaf2fb;
-    --sq-pattern:#cfe2f5;
-    --sq-pattern-line:#b9d6f0;
-    --gold-piece:#c17a3d;
-    --gold-stroke:#6b3a10;
-    --blue-piece:#5b7ba3;
-    --blue-stroke:#2c4160;
-    --coord:#7fa3c9;
-  }
+:root{
+  --bg-page:#eef4fb;
+  --sq-light:#eaf2fb;
+  --sq-pattern:#cfe2f5;
+  --sq-pattern-line:#b9d6f0;
+  --gold-piece:#c17a3d;
+  --gold-stroke:#6b3a10;
+  --blue-piece:#5b7ba3;
+  --blue-stroke:#2c4160;
+  --coord:#7fa3c9;
+}
 
-  *{box-sizing:border-box;}
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  width:100%;
+  height:100%;
+  margin:0;
+  overflow:hidden;
+}
+
+body{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  /*
+    Board ko width aur height
+    dono ke andar fit rakhenge
+  */
+  padding:10px;
+
+  background:var(--bg-page);
+  font-family:'Segoe UI', Arial, sans-serif;
+}
+
+h1{
+  margin:0 0 14px;
+
+  font-size:clamp(24px, 5vw, 42px);
+  font-weight:800;
+  letter-spacing:1px;
+
+  color:#3d6491;
+  text-shadow:0 2px 0 #ffffff;
+
+  text-align:center;
+
+  /* Heading screen se bahar nahi jayegi */
+  flex-shrink:0;
+}
+
+
+/* =========================
+   BOARD FRAME
+========================= */
+
+.board-frame{
+  padding:6px;
+
+  background:#dcebf9;
+  border-radius:8px;
+
+  box-shadow:
+    0 20px 45px -18px rgba(44,65,96,0.35);
+
+  /*
+    Board frame bhi viewport se
+    bada nahi hoga
+  */
+  max-width:100%;
+  max-height:calc(100vh - 75px);
+
+  flex-shrink:1;
+}
+
+
+/* =========================
+   BOARD
+========================= */
+
+.board{
+  display:grid;
+
+  /*
+    Width:
+    viewport ke according
+
+    Height:
+    viewport ke according
+
+    Dono mein se jo chhota hoga
+    wahi board size decide karega.
+  */
+  width:min(
+    calc(100vw - 32px),
+    calc(100vh - 90px),
+    736px
+  );
+
+  height:min(
+    calc(100vw - 32px),
+    calc(100vh - 90px),
+    736px
+  );
+
+  grid-template-columns:repeat(8, 1fr);
+  grid-template-rows:repeat(8, 1fr);
+
+  border-radius:4px;
+  overflow:hidden;
+}
+
+
+/* =========================
+   SQUARE
+========================= */
+
+.square{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+
+  min-width:0;
+  min-height:0;
+}
+
+.square.light{
+  background:var(--sq-light);
+}
+
+.square.dark{
+  background:var(--sq-pattern);
+
+  background-image:
+    linear-gradient(
+      var(--sq-pattern-line) 2px,
+      transparent 2px
+    ),
+    linear-gradient(
+      90deg,
+      var(--sq-pattern-line) 2px,
+      transparent 2px
+    );
+
+  background-size:33% 33%;
+  background-position:center;
+}
+
+.square.dark::before{
+  content:"";
+
+  position:absolute;
+  inset:22%;
+
+  border:3px solid var(--sq-pattern-line);
+  border-radius:3px;
+
+  opacity:0.7;
+}
+
+
+/* =========================
+   COORDINATES
+========================= */
+
+.coord{
+  position:absolute;
+
+  font-size:11px;
+  font-weight:700;
+
+  color:var(--coord);
+  opacity:0.85;
+
+  pointer-events:none;
+}
+
+.coord.rank{
+  top:4px;
+  left:5px;
+}
+
+.coord.file{
+  bottom:3px;
+  right:6px;
+}
+
+
+/* =========================
+   PIECES
+========================= */
+
+.piece{
+  /*
+    Piece board ke size ke
+    according automatically scale hoga
+  */
+  font-size:clamp(25px, 6vw, 58px);
+
+  line-height:1;
+
+  position:relative;
+  z-index:2;
+
+  user-select:none;
+  cursor:pointer;
+}
+
+
+/* =========================
+   GOLD PIECES
+========================= */
+
+.piece.gold{
+  color:var(--gold-piece);
+
+  -webkit-text-stroke:
+    1.8px var(--gold-stroke);
+
+  filter:
+    drop-shadow(
+      0 2px 2px rgba(0,0,0,0.25)
+    );
+}
+
+
+/* =========================
+   BLUE PIECES
+========================= */
+
+.piece.blue{
+  color:var(--blue-piece);
+
+  -webkit-text-stroke:
+    1.8px var(--blue-stroke);
+
+  filter:
+    drop-shadow(
+      0 2px 2px rgba(0,0,0,0.2)
+    );
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:600px){
 
   body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:30px 14px;
-    background: var(--bg-page);
-    font-family: 'Segoe UI', Arial, sans-serif;
-  }
-
-  .board-frame{
     padding:6px;
-    background:#dcebf9;
-    border-radius:8px;
-    box-shadow: 0 20px 45px -18px rgba(44,65,96,0.35);
   }
 
   h1{
-    margin:0 0 22px;
-    font-size:clamp(28px, 6vw, 42px);
-    font-weight:800;
-    letter-spacing:1px;
-    color:#3d6491;
-    text-shadow: 0 2px 0 #ffffff;
+    margin-bottom:8px;
+    font-size:clamp(22px, 7vw, 30px);
   }
 
-  .board{
-    display:grid;
-    grid-template-columns:repeat(8, min(11.5vw, 92px));
-    grid-template-rows:repeat(8, min(11.5vw, 92px));
-    border-radius:4px;
-    overflow:hidden;
-  }
-
-  .square{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-  }
-
-  .square.light{ background: var(--sq-light); }
-  .square.dark{
-    background: var(--sq-pattern);
-    background-image:
-      linear-gradient(var(--sq-pattern-line) 2px, transparent 2px),
-      linear-gradient(90deg, var(--sq-pattern-line) 2px, transparent 2px);
-    background-size: 33% 33%;
-    background-position: center;
-  }
-
-  .square.dark::before{
-    content:"";
-    position:absolute;
-    inset:22%;
-    border: 3px solid var(--sq-pattern-line);
-    border-radius:3px;
-    opacity:0.7;
+  .board-frame{
+    padding:4px;
+    border-radius:6px;
   }
 
   .coord{
-    position:absolute;
-    font-size:11px;
-    font-weight:700;
-    color: var(--coord);
-    opacity:0.85;
+    font-size:8px;
   }
-  .coord.rank{ top:4px; left:5px; }
-  .coord.file{ bottom:3px; right:6px; }
+
+  .coord.rank{
+    top:2px;
+    left:3px;
+  }
+
+  .coord.file{
+    bottom:2px;
+    right:3px;
+  }
 
   .piece{
-    font-size:min(7.5vw, 58px);
-    line-height:1;
-    position:relative;
-    z-index:2;
+    font-size:clamp(22px, 8vw, 45px);
+  }
+}
+
+
+/* =========================
+   VERY SMALL HEIGHT
+========================= */
+
+@media (max-height:600px){
+
+  body{
+    padding:4px;
   }
 
-  .piece.gold{
-    color: var(--gold-piece);
-    -webkit-text-stroke: 1.8px var(--gold-stroke);
-    
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.25));
+  h1{
+    margin-bottom:5px;
+    font-size:24px;
   }
 
-  .piece.blue{
-    color: var(--blue-piece);
-    -webkit-text-stroke: 1.8px var(--blue-stroke);
-    
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+  .board-frame{
+    padding:3px;
   }
+
+  .coord{
+    font-size:7px;
+  }
+
+  .piece{
+    font-size:clamp(20px, 7vh, 42px);
+  }
+}
