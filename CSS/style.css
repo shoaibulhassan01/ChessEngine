@@ -1,7 +1,8 @@
 :root{
   --bg-page:#302e2b;
   --sq-light:#f0d9b5;
-    --sq-dark:#b58863;
+  --sq-dark:#b58863;
+  --selected-square: #e8b84a;
 }
 
 *{
@@ -79,7 +80,7 @@ body{
   background:var(--sq-dark);
 }
 
-.pieces{
+.piece{
     width:97%;
     height:97%;
     object-fit:contain;
@@ -87,4 +88,8 @@ body{
     z-index:2;
     cursor:pointer;
     user-select:none;
+}
+
+.square.highlight{
+  background-color: #f6c453;
 }

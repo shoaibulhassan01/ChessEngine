@@ -20,7 +20,7 @@ function initializeBoard() {
       if (piece !== "") {
         const img = document.createElement("img");
         img.src = `Assets/${piece}.svg`;
-        img.classList.add("pieces");
+        img.classList.add("piece");
         square.appendChild(img);
       }
 
