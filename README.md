@@ -275,4 +275,4 @@ Build a complete chess platform from scratch that combines:
 → **📷 Computer Vision Input**
 → **🧠 Personally Trained Chess Engine**
 
-**Estimated Timeline:** 1.5–2 years
+**Estimated Timeline:** 1–2 years
